@@ -14,4 +14,6 @@
 
 If this doesn't help you at all open up your a comand-line terminal like PowerShell (Windows) or Terminal (Linux / OSX), navigate to the folder using the cd command. Type 'man cd' and press enter if you're at a loss here to. Then use the script by typing ./wantlist.py and adding the required parameters.
 
-Your final command could look like this: ./wantlist.py -f yourfile.list -u your-toke-here -d 'your-delimiter'
+Your final command could look like this: ```bash
+./wantlist.py -f yourfile.list -u your-toke-here -d 'your-delimiter'
+```
