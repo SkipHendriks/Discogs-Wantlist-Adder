@@ -6,9 +6,6 @@ import argparse
 import sys
 
 
-DELIMITER = " || "
-
-
 def readFile(filename, delimiter):
     with open(filename) as f:
         for line in f:
@@ -42,7 +39,7 @@ def addAlbum(album):
 
 def main():
 
-    global d
+    delimiter = ' || '
 
     parser = argparse.ArgumentParser()
 
@@ -68,7 +65,7 @@ def main():
         default=None,
         type=str,
         dest="FILE",
-        help="File with album-titles and artists delimited by '"+DELIMITER+"' (not including quotes) or a chosen delimiter"
+        help="File with album-titles and artists delimited by '"+delimiter+"' (not including quotes) or a chosen delimiter"
     )
 
     parser.add_argument(
@@ -77,7 +74,7 @@ def main():
         default=None,
         type=str,
         dest="DELIMITER",
-        help="Delimiter used in the specfied file. Defaults to '"+DELIMITER+"' (not including quotes) when not specified"
+        help="Delimiter used in the specfied file. Defaults to '"+delimiter+"' (not including quotes) when not specified"
     )
 
     parser.add_argument(
@@ -101,13 +98,15 @@ def main():
 
     if input_count is 1:
         if options.USER_TOKEN:
+            global d
             d = discogs_client.Client(
-                'ExampleApplication/0.1',
+                'WantlistAdder/0.1',
                 user_token=options.USER_TOKEN
             )
         else:
             raise RuntimeError("Please specify a user token")
-        delimiter = options.DELIMITER or " || "
+        if options.DELIMITER:
+            delimiter = options.DELIMITER
         if(options.FILE):
             readFile(options.FILE, delimiter)
         else:
