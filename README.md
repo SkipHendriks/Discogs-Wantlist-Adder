@@ -12,7 +12,7 @@
 4. Obtain a Consumer Token from Discogs.com
 5. Specify the obtained token with `-u` or `--user-token`.
 
-If this doesn't help you at all open up a comand-line terminal like PowerShell (Windows) or Terminal (Linux / OSX), navigate to the folder using the `cd` command. Type `man cd` and press enter if you're at a loss here to. Then use the script by typing ./wantlist.py and adding the required parameters.
+If this doesn't help you at all open up a comamnd-line terminal like PowerShell (Windows) or Terminal (Linux / OSX), navigate to the folder using the `cd` command. Type `man cd` and press enter if you're at a loss here too. Then use the script by typing ./wantlist.py and adding the required parameters.
 
 Your final command could look like this:
 ```bash
