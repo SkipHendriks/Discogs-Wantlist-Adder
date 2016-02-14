@@ -3,7 +3,8 @@
 
 <h4>Adds albums from specified file to your Discogs wantlist.</h4>
 
-<h2>How to</h2>
+
+<h3>How to</h3>
 
 1. Make a file with a list of Artists and Albums. Each line should first specify the artist, then have a common delimiter and specify the album after. Have a look at example.list for an example on how to do this.
 2. Specify this file with -f or --file
