@@ -126,7 +126,7 @@ def main():
         "--format",
         type=str,
         dest="FORMAT",
-        help="Album format you want in your wantlist (eg. Vinyl, CD, 12\", Cassette...)"
+        help="Album format you want in your wantlist (eg. Vinyl, CD, 12\", Cassette...) For a list of all formats go to https://www.discogs.com/help/formatslist"
     )
 
     options = parser.parse_args()
