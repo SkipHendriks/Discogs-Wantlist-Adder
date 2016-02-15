@@ -3,14 +3,16 @@
 
 <h4>Adds albums from specified file to your Discogs wantlist.</h4>
 
+I build this script to add my entire digital music library to my discogs wantlist in vinyl format. This is standard behavior, but this can be changed to a different format with the `--format` option.
+
 <br />
 
 <h3>Installation</h3>
 
-1. Install Discogs API Client using `pip install discogs_client`
+1. Install Discogs API Client using `pip3 install discogs_client`
 2. Download and unzip.
 
-If you don't have python installed, install it 
+If you don't have python 3 installed, download a recent version (at least 3.x) from their [website](https://www.python.org/downloads/ "Python's Homepage").
 
 <h3>How to</h3>
 
