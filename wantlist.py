@@ -7,54 +7,64 @@ import sys
 
 # Todo:
 # 1. Implement OAuth
-# 2. Add format option
-# 3. Refactoring:
+# 2. Refactoring:
 #    1. reading in main() ( will become handleUserInput())
 #    2. findAlbum() called from addAlbum()
 #    3. Add handleUserInput()
+# 3. Add Progress bar
 
 
-def readFile(filename, delimiter, revert):
+def readFile(filename, delimiter, revert, album_format):
     with open(filename) as f:
         for line in f:
-            album = findAlbum(line, delimiter)
+            album = findAlbum(line, delimiter, album_format)
+            if album:
+                if revert is True:
+                    removeAlbum(album)
+                else:
+                    addAlbum(album)
+
+
+def readSTDIN(stdin, delimiter, revert, album_format):
+    for line in stdin:
+        album = findAlbum(line, delimiter, album_format)
+        if album:
             if revert is True:
                 removeAlbum(album)
             else:
                 addAlbum(album)
 
 
-def readSTDIN(stdin, delimiter, *revert):
-    for line in stdin:
-        album = findAlbum(line, delimiter)
-        if revert is True:
-            removeAlbum(album)
-        else:
-            addAlbum(album)
-
-
-def findAlbum(line, delimiter):
+def findAlbum(line, delimiter, album_format):
     artist = line[0:line.find(delimiter)]
     album = line[line.find(delimiter)+len(delimiter):]
 
-    return d.search(
+    results = d.search(
         artist=artist,
         release_title=album,
-        format="Vinyl",
+        format=album_format,
         type="release"
-    )[0]
+    )
+
+    if len(results) > 0:
+        return results
+    else:
+        print(album + ' by ' + artist + ' was not found as ' + album_format)
+        return None
 
 
-def addAlbum(album):
-    pprint.pprint(vars(album))
+def addAlbum(albums):
     me = d.identity()
-    me.wantlist.add(album)
+    for album in albums:
+        pprint.pprint(album)
+        me.wantlist.add(album)
 
 
-def removeAlbum(album):
-    pprint.pprint(vars(album))
+def removeAlbum(albums):
     me = d.identity()
-    me.wantlist.remove(album)
+    for album in albums:
+        pprint.pprint(album)
+        me.wantlist.remove(album)
 
 
 def main():
@@ -112,14 +122,19 @@ def main():
         help="Removes the specified files from your wantlist"
     )
 
-    options = parser.parse_args()
+    parser.add_argument(
+        "--format",
+        type=str,
+        dest="FORMAT",
+        help="Album format you want in your wantlist (eg. Vinyl, CD, 12\", Cassette...)"
+    )
 
-    print(options.REVERT)
+    options = parser.parse_args()
 
     input_count = sum([bool(options.FILE), not sys.stdin.isatty()])
 
     if input_count is 0:
-        options.FILE = str(input("Please enter the location of your list file: "))
+        options.FILE = input("Please enter the location of your list file: ")
     elif input_count > 1:
         raise RuntimeError("Please specify only file or stdin")
     if not options.USER_TOKEN:
@@ -131,12 +146,17 @@ def main():
         user_token=options.USER_TOKEN
     )
 
+    album_format = "Vinyl"
+
+    if options.FORMAT:
+        album_format = options.FORMAT
+
     if options.DELIMITER:
         delimiter = options.DELIMITER
     if(options.FILE):
-        readFile(options.FILE, delimiter, options.REVERT)
+        readFile(options.FILE, delimiter, options.REVERT, album_format)
     else:
-        readSTDIN(options.STDIN, delimiter, options.REVERT)
+        readSTDIN(options.STDIN, delimiter, options.REVERT, album_format)
 
 if __name__ == "__main__":
     main()
