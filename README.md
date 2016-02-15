@@ -9,7 +9,7 @@ I build this script to add my entire digital music library to my discogs wantlis
 
 <h3>Installation</h3>
 
-1. Install Discogs API Client using `pip3 install discogs_client`
+1. Install Discogs API Client from your terminal using `pip3 install discogs_client`
 2. Download and unzip.
 
 If you don't have python 3 installed, download a recent version (at least 3.x) from their [website](https://www.python.org/downloads/ "Python's Homepage").
