@@ -3,7 +3,7 @@
 
 <h4>Adds albums from specified file to your Discogs wantlist.</h4>
 
-I build this script to add my entire digital music library to my discogs wantlist in vinyl format. This is standard behavior, but can be changed to a different format with the `--format` option.
+I build this script to add my entire digital music library to my discogs wantlist in vinyl format. This is standard behavior, but can be changed to a different [format](https://www.discogs.com/help/formatslist "Discogs formatlist") with the `--format` option.
 
 <br />
 
