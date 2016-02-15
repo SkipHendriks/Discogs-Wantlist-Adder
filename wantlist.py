@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import pprint
 import discogs_client
@@ -6,10 +6,9 @@ import argparse
 import sys
 
 # Todo:
-# 1. Add prompts for file and token
-# 2. Implement OAuth
-# 3. Add format option
-# 4. Refactoring:
+# 1. Implement OAuth
+# 2. Add format option
+# 3. Refactoring:
 #    1. reading in main() ( will become handleUserInput())
 #    2. findAlbum() called from addAlbum()
 #    3. Add handleUserInput()
@@ -119,28 +118,25 @@ def main():
 
     input_count = sum([bool(options.FILE), not sys.stdin.isatty()])
 
-    if input_count is 1:
-        if options.USER_TOKEN:
-
-            global d
-            d = discogs_client.Client(
-                'Discogs-Wantlist-Adder/0.1',
-                user_token=options.USER_TOKEN
-            )
-
-        else:
-            raise RuntimeError("Please specify a user token")
-        if options.DELIMITER:
-            delimiter = options.DELIMITER
-        if(options.FILE):
-            readFile(options.FILE, delimiter, options.REVERT)
-        else:
-            readSTDIN(options.STDIN, delimiter, options.REVERT)
-    elif input_count is 0:
-        raise RuntimeError("Please specify a file location")
-    else:
+    if input_count is 0:
+        options.FILE = str(input("Please enter the location of your list file: "))
+    elif input_count > 1:
         raise RuntimeError("Please specify only file or stdin")
+    if not options.USER_TOKEN:
+        options.USER_TOKEN = input("Please enter your Discogs Consumer Token: ")
 
+    global d
+    d = discogs_client.Client(
+        'Discogs-Wantlist-Adder/0.1',
+        user_token=options.USER_TOKEN
+    )
+
+    if options.DELIMITER:
+        delimiter = options.DELIMITER
+    if(options.FILE):
+        readFile(options.FILE, delimiter, options.REVERT)
+    else:
+        readSTDIN(options.STDIN, delimiter, options.REVERT)
 
 if __name__ == "__main__":
     main()
